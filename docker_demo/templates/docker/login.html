@@ -1,0 +1,26 @@
+{% extends "docker/common/base.html" %}
+{% block page_content%}
+<style>
+
+.login_form {
+    width:250px;
+    margin:auto;
+    
+}
+</style>
+
+ <div  class='login_form'>
+  <form class="form-signin" role="form" action='/login_auth/' method='POST'>
+    <h2 class="form-signin-heading center">用户输入</h2>
+    <input type="input" name='Username' class="form-control" placeholder="input username" required autofocus><br>
+    <input type="password" name='Password' class="form-control" placeholder="input password" required>
+    <label class="checkbox">
+    </label>
+    
+    <p color='red'>{{login_err}}</p>
+    
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+  </form>
+  
+  </div>
+{%endblock%}

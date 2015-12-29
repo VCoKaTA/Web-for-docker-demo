@@ -1,0 +1,39 @@
+﻿
+{% extends "docker/common/base.side.html" %}
+   <!-- Role List -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+
+
+{% block rcontent %}
+<script type="text/javascript">
+	   $(function(){
+			$.getJSON("/Docker/image/build/",function(data){
+				$("#dockerfile").html(data);
+			});
+    });
+	
+$(document).ready(function(){
+  $("#create_image").click(function(){
+    if($("#dockerfile").length>0){
+    var data=($("#dockerfile").val());
+    $.post("/Docker/image/build/",
+    {
+         'data': data
+    });
+   }
+  });
+});
+</script>
+
+		<form class="form-horizontal" >
+		<div class="form-group">
+			<div class="col-sm-12">
+				<textarea  name="dockerfile" id="dockerfile"  style="background:#CBD8E6;overflow:auto; height:100%;width:100%;float:left" class="form-control" rows="40" >{{data}}
+				</textarea></div>
+			
+		</form>
+
+{% endblock %}
+				<!-- 	href={% url "" %}	 href={% url "" res.id %}	 -->				

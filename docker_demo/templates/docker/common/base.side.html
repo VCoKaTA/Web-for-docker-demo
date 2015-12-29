@@ -1,0 +1,64 @@
+{% extends "docker/common/base.html" %}
+
+{% block page_content %}
+
+
+    <div class="container" style="width:95%">
+        <div class="row">
+
+            <!-- 侧边栏 -->
+            <div class="col-md-2"> 
+                {% if user.is_authenticated %}
+                    <div class="panel-group" id="accordion">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" class="collapsed"><span class="glyphicon glyphicon-list-alt btn-xs"></span>Docker 镜像</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse {% if 'image' in request.path %} in {% endif %}">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr><td><span class="glyphicon glyphicon-tree-conifer btn-xs"></span><a href={% url "listimageurl" %}>镜像列表</a></td></tr>
+                                            <tr><td><span class="glyphicon glyphicon-tree-conifer btn-xs"></span><a href={% url "buildimageurl" %}>创建镜像</a></td></tr>
+
+                                         
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                       <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed"><span class="glyphicon glyphicon-list-alt btn-xs"></span>Docker 容器</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse {% if 'container' in request.path %} in {% endif %}">
+                                <div class="panel-body">
+                                    <table class="table">
+                                        <tbody>
+											<tr><td><span class="glyphicon glyphicon-tree-conifer btn-xs"></span><a href={% url "listcontainerurl" %}>容器列表</a></td></tr>
+											<tr><td><span class="glyphicon glyphicon-tree-conifer btn-xs"></span><a href={% url "createcontainerurl" %}>添加容器</a></td></tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- 内容区域 -->
+            <div class="col-md-10">
+                {% block rcontent %}{% endblock %}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+                                            <!-- <tr><td><span class="glyphicon glyphicon-tree-conifer btn-xs"></span><a href={% url "buildimageurl" %}>创建镜像</a></td></tr> -->
+                                            <!-- <tr><td><span class="glyphicon glyphicon-tree-conifer btn-xs"></span><a href={% url "createcontainerurl" %}>创建容器</a></td></tr> -->

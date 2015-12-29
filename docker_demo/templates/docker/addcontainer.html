@@ -1,0 +1,43 @@
+﻿	{% extends "docker/common/base.side.html" %}
+   <!-- Role List -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+
+
+{% block rcontent %}
+	<div class="col-md-5 col-md-offset-1">
+		<form class="form-horizontal" action={% url "createcontainerurl" %} method='POST'>
+				<div class="form-group">
+					 <label for="container_name" >容器名</label>
+						<input name="container" id="container_name" type="input"class="form-control" placeholder="确保容器名不能重复"></input>
+				</div>
+				<div class="form-group">
+					 <label for="nodes" >选择节点</label>
+					<div class="controls">
+						<select name="node" id="nodes" class="form-control">
+						   <option value="random" selected="selected"> 随机节点</option>
+						{% for item in nodes %}
+						  <option value="{{item.node_ip}}">{{item.node_name}}&nbsp:&nbsp{{item.node_ip}}</option>
+						{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					 <label for="image_name" >选择镜像</label>
+					<div class="controls">
+						<select name="image" id="image_name" class="form-control">
+						{% for item in images %}
+						  <option value="{{item.repository}}">{{item.node.node_ip}}:5000/{{item.repository}}</option>
+						{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="controls">
+						<button type="submit" class="pull-right btn btn-primary">确认</button>
+					</div>
+				</div>
+		</form>
+	</div>
+{%endblock%}

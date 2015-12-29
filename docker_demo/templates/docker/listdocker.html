@@ -1,0 +1,117 @@
+﻿
+{% extends "docker/common/base.side.html" %}
+   <!-- Role List -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+{% block rcontent %}
+<script type="text/javascript">
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+$('#image_commit').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('.modal-body input').val(recipient)
+})
+</script>
+               	<table class="table table-hover table-striped  table-bordered table-condensed">
+					<tr>
+						<th>Container Name </th>
+						<th>Container Id</th>
+						<th>Container IP</th>
+						<th>Image</th>
+						<th>Node</th>
+						<th>Status</th>
+						<th>User</th>
+						<th>Create Time</th>
+						<th>操作</th>
+					</tr>
+		
+					{% for res in containers %}
+					<tr style="font-size: 13px;">
+						<td>{{res.container_name}}</td>
+						<td>{{res.container_id |slice:"20"}}</td>
+						<td>{{res.container_ip}}</td>
+						<td>{{res.image}}</td>
+						<td>{{res.node.node_name}}&nbsp:&nbsp{{res.node.node_ip}}</td>
+						{% if res.status %}
+						<td>Running</td>
+						{% else %}
+						<td>Stopped</td>
+						{% endif %}
+						<td>{{res.user.username}}</td>
+						<td>{{res.create_time}}</td>
+						<td class="host_buttom">
+						<a class="btn btn-warning btn-xs" href={% url "stopcontainerurl" res.id %} onclick="return confirm('是否确认开机？')">关机</a>
+                        <a class="btn btn-info btn-xs" href={% url "startcontainerurl" res.id %} onclick="return confirm('是否确认开机？')">开机</a>
+                        <a class="btn btn-danger btn-xs" href={% url "restartcontainerurl" res.id %} onclick="return confirm('是否确认重启？')">重启</a>
+						<a href={% url "deletecontainerurl" res.id %}  onclick="return confirm('是否确认删除？')"> &nbsp<span class="glyphicon glyphicon-trash btn-xs"></span></a>
+						<a data-toggle="modal" data-target="#image_commit" > &nbsp<span class="glyphicon glyphicon-paperclip" data-toggle="tooltip" title="创建为镜像"></span></a>
+						</td> 
+					{{err}}
+					</tr>
+
+
+					<div class="modal fade" id="image_commit" tabindex="-1" role="dialog" aria-labelledby="image_commit_ModalLabel">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="image_commit_ModalLabel">利用此虚拟机制作镜像</h4>
+						  </div>
+						  <div class="modal-body">
+							<form role="form" action={% url "commitimageurl" res.id %} method="POST" >
+							  <div class="form-group">
+								<label for="recipient-name" class="control-label">容器:</label>
+								<label type="text" class="form-control"   >{{res.container_name}}</label>
+							  </div>
+							  <div class="form-group">
+								<label for="recipient-name" class="control-label">所使用镜像:</label>
+								<label type="text" class="form-control"  >{{res.image}}</label>
+							  </div>							
+							  <div class="form-group">
+								<label for="recipient-name" class="control-label">生成镜像名:</label>
+								<input type="text" class="form-control" name="image_name"  placeholder="所要生成镜像名，避免镜像名重复">
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+								<button type="submit" class="btn btn-primary">创建</button>
+							   </div>
+							</form>
+						  </div>
+						  
+						</div>
+					  </div>
+					</div>
+					{% endfor %}
+				
+				</table>
+
+     
+
+
+
+{% endblock %}
+				<!-- 							<td class="host_buttom">
+							<a class="btn btn-info btn-xs"  href="/autoCloud/cloud/start/{{res.id}}/ " >开机</a>
+
+						</td>		<a class="btn btn-warning btn-xs" href={% url "Stopurl" res.id %} >关机</a>
+							<a class="btn btn-danger btn-xs" href={% url "Restarturl" res.id %} >重启</a> -->
+
+		<!-- 		<table class="table table-striped">
+					<tr style="font-size: 13px;">
+						<td><a ><button type="button" class="btn btn-default">刷新模板</button></a></td>						
+					</tr>
+
+				</table> -->
+		<!-- <td class="host_buttom">
+                        <a class="btn btn-warning btn-xs" href={% url "Stopurl" res.id %} onclick="return confirm('是否确认开机？')">关机</a>
+                        <a class="btn btn-info btn-xs" href={% url "Starturl" res.id %} onclick="return confirm('是否确认开机？')">开机</a>
+                        <a class="btn btn-danger btn-xs" href={% url "Restarturl" res.id %} onclick="return confirm('是否确认重启？')">重启</a>
+                      <a  href={% url "Deleteurl" res.id %}  onclick="return confirm('是否确认删除？')"> &nbsp<span class="glyphicon glyphicon-trash btn-xs"></span></a>
+                    </td> -->

@@ -1,0 +1,58 @@
+﻿
+{% extends "docker/common/base.side.html" %}
+   <!-- Role List -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+
+
+{% block rcontent %}
+<table class="table table-hover table-striped  table-bordered table-condensed">
+					<tr>
+						<th>Repository </th>
+						<th>Image Id</th>
+						<th>Node</th>
+						<th>Size</th>
+						<th>Node Type</th>
+						{% if user.is_superuser %}
+						<th>操作</th>
+						{% endif %}
+					</tr>
+		
+					{% for res in images %}
+					<tr style="font-size: 13px;">
+						<td>{{res.repository}}</td>
+						<td>{{res.image_id |slice:"20"}}</td>
+						<td>{{res.node.node_name}}&nbsp:&nbsp{{res.node.node_ip}}</td>
+						{% if res.size %}
+						<td>{{res.size}}M</td>
+						{% else %}
+						<td>M</td>
+						{% endif %}
+						{% if res.image_type %}
+						<td>仓库</td>
+						{% else %}
+						<td>本地</td>
+						{% endif %}
+
+					{% if user.is_superuser %}
+					<td class="host_buttom">
+                      <a href={% url "deleteimageurl" res.id %}  onclick="return confirm('是否确认删除？')"> &nbsp<span class="glyphicon glyphicon-trash btn-xs"></span></a>
+                    </td>
+					{% endif %}
+					
+							{{err}}
+					</tr>
+					{% endfor %}
+				
+				</table>
+				<table class="table table-striped">
+					<tr style="font-size: 13px;">
+						<td><a href={% url "refreshimageurl" %}><button type="button" class="btn btn-default">刷新镜像</button></a></td>
+						
+					</tr>
+
+				</table>
+
+
+{% endblock %}

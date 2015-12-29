@@ -1,0 +1,8 @@
+FROM        docker.io/centos
+MAINTAINER  cm "cm@hc360.com"
+
+RUN         yum install -y openssh openssh-server openssh-clients
+RUN         yum install -y net-tools
+RUN         /bin/echo 'root:jd07gm09' |chpasswd
+EXPOSE      22
+CMD         /usr/sbin/sshd -D

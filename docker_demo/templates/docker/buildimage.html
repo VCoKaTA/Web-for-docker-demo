@@ -1,0 +1,55 @@
+﻿
+{% extends "docker/common/base.side.html" %}
+   <!-- Role List -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+
+
+{% block rcontent %}
+<script type="text/javascript">
+$(function(){
+			$.get("/Docker/image/dockerfile/",function(data){
+				
+				$("#dockerfile").html(data);
+			});
+    });
+	
+
+</script>
+		<form class="form-horizontal" action={% url "buildimageurl" %} method='POST'>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<textarea  name="dockerfile" id="dockerfile"  style="background:#CBD8E6;overflow:auto; height:100%;width:100%;float:left" class="form-control" rows="40" >
+				</textarea></div>
+
+			  <div class="col-sm-10">
+			 <input type="text" class="col-md-8 form-control " name="image_name" placeholder="镜像名">
+			</div>
+			 <div class="col-sm-2">
+			<button  type="submit"   class="  btn btn-danger pull-right span2 " data-toggle="modal">创建</button>
+			</div></div>
+			
+		</form>
+
+
+{% endblock %}
+				<!-- 	href={% url "" %}	 href={% url "" res.id %}	 -->				
+<!-- 				$(document).ready(function(){
+  $("#create_image").click(function(){
+    if($("#dockerfile").length>0){
+    var data1=($("#dockerfile").val());
+    var data2=document.getElementById("image_name").value;
+	var data=new Array();
+	data.push(data1);
+	data.push(data2);
+	console.log(data1);
+	console.log(data2);
+	console.log(data);
+    $.post("/Docker/image/build/",
+    {
+         'data': data
+    });
+   }
+  });
+}); -->
