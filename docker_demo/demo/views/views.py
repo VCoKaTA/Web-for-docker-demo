@@ -127,7 +127,7 @@ def timestamp_datetime(value):
 ####################
 def Refresh_container():
 	nodes = models.Node.objects.filter(node_type='node')
-	print u'刷新容器'
+	print '刷新容器'
 	if nodes:
 		num=len(nodes)
 		threads = []
@@ -575,6 +575,7 @@ def image_refresh(request):
 def dockerfile(request):
 	try:
 		datapath = os.getcwd() + '/demo/views/dockerfile'
+		print datapath
 		f = open(datapath,'r')
 		data=f.read()
 		f.close()
@@ -611,12 +612,12 @@ def image_delete(request,id):
 					Refresh_image()
 					return HttpResponseRedirect(reverse('listimageurl'))
 				else:
-					err = u"删除%s失败" % image.repository
+					err = "删除%s失败" % image.repository
 					return render_to_response('docker/listimages.html',{'user':user,'err':err})
 				
 			except:
 				print traceback.format_exc()
-				err = u"删除%s失败" % image.repository
+				err = "删除%s失败" % image.repository
 				return HttpResponseRedirect(reverse('listimageurl'))
 				# return render_to_response('auto_docker/listimages.html',{'user':user,'err':err})
 		else:
