@@ -1,0 +1,19 @@
+body {
+    padding-top: 70px;
+    font-family:"微软雅黑";
+}
+
+/* .... */
+.nav li a{ font-size:16px; }
+.input{ padding-top: 0px; padding-bottom: 0px; margin: 0px; height:10px;}
+
+/* Frame side bar */
+.glyphicon { margin-right:10px; }
+.panel-body { padding:0px; }
+.panel-body table tr td { padding-left: 15px }
+.panel-body .table {margin-bottom: 0px; }
+
+/* Django error list. */
+ul.errorlist {margin: 0; pandding: 0;}
+.errorlist li {color: red ;}
+
