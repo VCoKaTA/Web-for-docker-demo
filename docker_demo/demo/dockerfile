@@ -1,8 +1,8 @@
 FROM        docker.io/centos
-MAINTAINER  cm "cm@hc360.com"
+MAINTAINER  cm "cm@xxx.com"
 
 RUN         yum install -y openssh openssh-server openssh-clients
 RUN         yum install -y net-tools
-RUN         /bin/echo 'root:jd07gm09' |chpasswd
+RUN         /bin/echo 'root:xxxxx' |chpasswd
 EXPOSE      22
 CMD         /usr/sbin/sshd -D
